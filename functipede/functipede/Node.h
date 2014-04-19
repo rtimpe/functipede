@@ -8,7 +8,7 @@ template <typename ...Args> struct Ports<types<Args...>> : public std::tuple<Por
 template <typename InPorts, typename OutPorts>
 using Node_guts = std::function<InPorts(OutPorts)>;
 
-template <typename InList, typename OutList> struct Node : public Node_guts<Ports<InList>, Ports<OutList>> {};
+template <typename InList, typename OutList> using Node = Node_guts<Ports<InList>, Ports<OutList>>;
 
 // making sure this stuff actually compiles
 using Ports_test = Ports<types<int, int>>;

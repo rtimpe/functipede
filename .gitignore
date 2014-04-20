@@ -19,3 +19,7 @@
 *.exe
 *.out
 *.app
+*.opensdf
+/functipede/functipede/x64/Debug
+/functipede/ipch/functipede-32e82bdb
+*.sdf

@@ -8,6 +8,8 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	auto lambda = [](int a){return a; };
+	auto node = wrap(lambda);
 	return 0;
 }
 

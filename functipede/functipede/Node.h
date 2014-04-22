@@ -17,18 +17,6 @@ template <typename ...Ins, typename ...Outs> struct Node<types<Ins...>, types<Ou
 	typedef typename Ports<Outs...>::type OutPorts;
 	typedef typename std::function<InPorts(OutPorts)> func;
 };
-//template <typename ...Ins> struct In
-//{
-//	typedef typename Ports<Ins...>::type InPorts;
-//	template <typename ...Outs> struct Out
-//	{
-//		typedef typename Ports<Outs...>::type OutPorts;
-//		typedef typename std::function<InPorts(OutPorts)> Node;
-//	};
-//};
-
-//template <typename Arg, typename Ret>
-//Node<types<Arg>, types<Ret>> wrap(std::function<Ret(Arg)> func);
 
 template <typename Arg, typename Ret, typename NodeT = Node<types<Arg>, types<Ret>>, typename NodeFunc = NodeT::func>
 inline NodeFunc wrap(std::function<Ret(Arg)> func)

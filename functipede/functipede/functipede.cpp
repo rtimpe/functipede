@@ -5,7 +5,6 @@
 #include "tbb\flow_graph.h"
 #include "Node.h"
 
-
 int _tmain(int argc, _TCHAR* argv[])
 {
 	auto node = wrap<int, int>([](int a){ return a; });
@@ -14,4 +13,3 @@ int _tmain(int argc, _TCHAR* argv[])
 	std::get<0>(inports)(1);
 	return 0;
 }
-

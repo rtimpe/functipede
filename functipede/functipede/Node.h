@@ -18,8 +18,9 @@ template <typename ...Ins, typename ...Outs> struct Node<types<Ins...>, types<Ou
 	typedef typename std::function<InPorts(OutPorts)> func;
 };
 
-template <typename Arg, typename Ret, typename NodeT = Node<types<Arg>, types<Ret>>, typename NodeFunc = NodeT::func>
-inline NodeFunc wrap(std::function<Ret(Arg)> func)
+template <typename Arg, typename Ret, typename NodeT = Node<types<Arg>, types<Ret>>,
+	typename NodeFunc = NodeT::func>
+inline NodeFunc wrapS(std::function<Ret(Arg)> func)
 {
 	return[func](NodeT::OutPorts outs)
 	{
@@ -30,6 +31,18 @@ inline NodeFunc wrap(std::function<Ret(Arg)> func)
 			std::get<0>(outs)(func(arg));
 		}));
 	};
+}
+
+template <typename Ins, typename Outs, typename Func,
+	typename NodeFunc = Node<Ins, Outs>::func>
+NodeFunc wrapP(Func func);
+
+template <typename ...Ins, typename ...Outs,
+	typename Func = std::function<void(Ins..., std::tuple<Outs...>)>,
+	typename NodeT = Node<Ins, Outs>, typename NodeFunc = NodeT::func>
+inline NodeFunc NodeFunc<types<Ins...>, types<Outs...>>(Func func)
+{
+
 }
 
 // making sure this stuff actually compiles

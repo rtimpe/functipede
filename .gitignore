@@ -23,3 +23,7 @@
 /functipede/functipede/x64/Debug
 /functipede/ipch/functipede-32e82bdb
 *.sdf
+/functipede/Debug
+/functipede/functipede/Debug
+/functipede/x64/Debug
+*.suo

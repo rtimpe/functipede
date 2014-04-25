@@ -12,9 +12,13 @@
 #include <tchar.h>
 
 #include <functional>
+#include <type_traits>
+#include <utility>
 
 #include "tbb\flow_graph.h"
 
 #include "typelist.h"
+#include "function_traits.h"
+#include "function_eval.h"
 
 // TODO: reference additional headers your program requires here

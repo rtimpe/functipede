@@ -1,25 +1,43 @@
 #pragma once
 
-template <typename Inner, typename Outer> class composed
+// A Node is a function that accepts a tuple of output port bindings as input and returns a tuple of input ports.
+
+// Here we will take a a normal function and wrap it into a Node
+
+template <typename ...Arg> struct Port
 {
-public:
-	explicit composed(Inner inner = Inner(), Outer outer = Outer()) :
-		_inner(inner),
-		_outer(outer) {}
-
-	template <typename T>
-	auto operator()(T x) -> decltype(Outer()(Inner()(x)))
-	{
-		return _outer(_inner(x));
-	}
-
-private:
-	Inner _inner;
-	Outer _outer;
+	typedef std::function<void(Arg...)> type;
 };
 
-template <typename Function1, typename Function2>
-composed<Function1, Function2> compose(Function1 f1, Function2 f2)
+template <typename ...Args> struct Ports
 {
-	return composed<Function1, Function2>(f1, f2);
+	typedef std::tuple<typename Port<Args>::type...> type;
+};
+
+template <class Func, class InPorts, class OutPorts>
+struct wrapHelper
+{
+	template <class ...Args>
+	struct wrapWrapper {
+		static auto wrap(Func&& func)->std::function<InPorts(OutPorts)>
+		{
+			return[func](OutPorts outs)
+			{
+				// return the InPorts
+				return std::make_tuple([func, outs](Args args...)
+				{
+					// call func with arg and pipe the result through outs
+					std::get<0>(outs)(func(std::forward(args...)));
+				});
+			};
+		}
+	};
+};
+
+template <class Func,
+	class InPorts = std::tuple<function_traits<Func>::arguments<Port>>,
+	class OutPorts = std::tuple<Port<function_traits<Func>::return_type>>>
+auto wrap(Func&& func)->std::function<InPorts(OutPorts)>
+{
+	return function_traits<Func>::arguments<wrapHelper<Func, InPorts, OutPorts>::wrapWrapper>::wrap(func);
 }

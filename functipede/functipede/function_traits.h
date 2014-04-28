@@ -23,6 +23,9 @@ struct function_traits<R(Args...)>
 		static_assert(N < arity, "error: invalid parameter index.");
 		using type = typename std::tuple_element<N, std::tuple<Args...>>::type;
 	};
+
+	template <template <class ...Ts> class Wrapper>
+	using arguments = typename Wrapper<Args...>;
 };
 
 // member function pointer

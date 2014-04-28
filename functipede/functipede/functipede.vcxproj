@@ -81,6 +81,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="function_compose.h" />
     <ClInclude Include="function_eval.h" />
     <ClInclude Include="function_traits.h" />
     <ClInclude Include="Node.h" />

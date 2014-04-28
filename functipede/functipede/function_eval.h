@@ -1,5 +1,7 @@
 #pragma once
 
+// borrowed from functionalcpp.wordpress.com
+
 // functions, functors, lambdas, etc.
 template<
 	class F, class... Args,
